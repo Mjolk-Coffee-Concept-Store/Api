@@ -8,6 +8,7 @@
     "dev": "nodemon src/index.ts",
     "build": "tsc",
     "watch": "tsc -w",
+    "swagger": "ts-node src/swagger.ts",
     "migrate:create": "npx typeorm-ts-node-commonjs migration:generate src/migrations/Update-Table -d src/data-source.ts",
     "migrate:run": "npx typeorm-ts-node-commonjs migration:run -d src/data-source.ts"
   },
@@ -23,15 +24,13 @@
     "jsonwebtoken": "^9.0.2",
     "pg": "^8.13.1",
     "reflect-metadata": "^0.2.2",
-    "swagger-autogen": "^2.23.7",
-    "swagger-ui-express": "^5.0.1",
     "typeorm": "^0.3.20"
   },
   "devDependencies": {
-    "@types/express": "^5.0.0",
+    "@types/express": "^4.17.21",
+    "@types/jsonwebtoken": "^9.0.7",
     "@types/node": "^22.10.2",
     "nodemon": "^3.1.9",
-    "ts-node": "^10.9.2",
     "typescript": "^5.7.2"
   }
 }

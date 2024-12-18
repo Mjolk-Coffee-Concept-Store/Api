@@ -7,11 +7,9 @@ import bodyParser from "body-parser";
 import { AppDataSource } from "./data-source";
 import Logger from "./logger";
 
-import { errorHandler } from "./middleware/errorHandler";
+import { errorHandler } from "./middlewares/errorHandler";
 
 import { routes } from "./routes/routes";
-import swaggerUi from "swagger-ui-express";
-import swaggerOutput from "./swagger_output.json";
 
 import { ENV } from "./config/env";
 
@@ -25,7 +23,6 @@ app.use(express.json());
 app.use(errorHandler);
 
 app.use("/api", routes);
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerOutput));
 
 app.listen(PORT, () => {
   console.info(`💽 Mjölk API starting...`);
