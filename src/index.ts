@@ -1,16 +1,41 @@
-import express from "express";
 import "reflect-metadata";
+
+import express from "express";
+import cors from "cors";
+import bodyParser from "body-parser";
+
+import { AppDataSource } from "./data-source";
+import Logger from "./logger";
+
+import { errorHandler } from "./middleware/errorHandler";
+
+import { routes } from "./routes/routes";
+import swaggerUi from "swagger-ui-express";
+import swaggerOutput from "./swagger_output.json";
+
 import { ENV } from "./config/env";
 
 const app = express();
 const PORT = ENV.APP_PORT;
 
+app.use(cors());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(errorHandler);
 
-app.get("/", (req, res) => {
-  res.send(`Welcome to ${process.env.APP_NAME}`);
-});
+app.use("/api", routes);
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerOutput));
 
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  console.info(`💽 Mjölk API starting...`);
+  AppDataSource.initialize().then(() => {
+    console.info(`📡 Database ${ENV.DB_DATABASE} connected`);
+    console.info(`🚀 Mjölk API started on port ${PORT}`);
+
+    if (ENV.APP_ENV === "prod") {
+      console.info(`🔒 Running in production mode`);
+      Logger.getInstance().log("INFO", "SYSTEM", "API started");
+    }
+  });
 });

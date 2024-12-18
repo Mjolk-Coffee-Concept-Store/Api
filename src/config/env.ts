@@ -8,6 +8,7 @@ export const ENV = {
   APP_VERSION: process.env.APP_VERSION || "1.0.0",
   APP_DEBUG: process.env.APP_DEBUG === "true",
   APP_PORT: process.env.APP_PORT || 3000,
+  APP_URL: process.env.APP_URL || "http://localhost:3000",
   APP_JWT_SECRET: process.env.APP_JWT_SECRET,
 
   DB_TYPE: process.env.DB_TYPE || "postgres",

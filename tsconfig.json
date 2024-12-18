@@ -8,6 +8,10 @@
     "skipLibCheck": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "sourceMap": true
-  }
+    "sourceMap": true,
+    "resolveJsonModule": true
+  },
+  "include": ["src/swagger_output.json", "src/**/*"],
+  "exclude": ["node_modules"],
+  "types": ["node", "express"]
 }

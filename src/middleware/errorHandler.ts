@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from "express";
+import Logger from "../logger";
 
 /** Internal ErrorHandle Middleware */
 export function errorHandler(
@@ -7,6 +8,6 @@ export function errorHandler(
   res: Response,
   next: NextFunction
 ) {
-  console.error(err.stack);
+  Logger.getInstance().log("ERROR", "SYSTEM", err.message, err.stack);
   res.status(500).json({ message: "Internal Server Error" });
 }
