@@ -36,6 +36,10 @@ const doc = {
       description: "Operations about Backoffice users",
     },
     {
+      name: "Consumables",
+      description: "Operations about Consumables",
+    },
+    {
       name: "Recommendations",
       description: "Operations about Recommendations",
     },

@@ -23,6 +23,16 @@ This repository contains the core API for the coffee shop Mkölk. The API is bui
 | GET    | /recommendations/:id | Gets a recommendation    | Requires authentication |
 | DELETE | /recommendations/:id | Deletes a recommendation | Requires authentication |
 
+### Consumables
+
+| Method | Route            | Description          | Security                |
+| ------ | ---------------- | -------------------- | ----------------------- |
+| GET    | /consumables     | Gets consumables     | N/A                     |
+| POST   | /consumables     | Creates a consumable | Requires authentication |
+| GET    | /consumables/:id | Gets a consumable    | N/A                     |
+| DELETE | /consumables/:id | Deletes a consumable | Requires authentication |
+| PUT    | /consumables/:id | Updates a consumable | Requires authentication |
+
 ### Brunchs
 
 #### Brunchs

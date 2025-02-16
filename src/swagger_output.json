@@ -33,6 +33,10 @@
       "description": "Operations about Backoffice users"
     },
     {
+      "name": "Consumables",
+      "description": "Operations about Consumables"
+    },
+    {
       "name": "Recommendations",
       "description": "Operations about Recommendations"
     },
@@ -175,6 +179,200 @@
           },
           "404": {
             "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/consumables/": {
+      "post": {
+        "tags": [
+          "Consumables"
+        ],
+        "summary": "Create a new consumable",
+        "description": "",
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "example": "any"
+                  },
+                  "type": {
+                    "example": "any"
+                  },
+                  "description": {
+                    "example": "any"
+                  },
+                  "temperature": {
+                    "example": "any"
+                  },
+                  "price": {
+                    "example": "any"
+                  },
+                  "is_vegetarian": {
+                    "example": "any"
+                  },
+                  "is_vegan": {
+                    "example": "any"
+                  },
+                  "availability": {
+                    "example": "any"
+                  },
+                  "allergens": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Consumables"
+        ],
+        "summary": "Get consumables",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/consumables/{id}": {
+      "get": {
+        "tags": [
+          "Consumables"
+        ],
+        "summary": "Get a consumable by Id",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Consumables"
+        ],
+        "summary": "Delete a consumable by Id",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Consumables"
+        ],
+        "summary": "Update a consumable by Id",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "example": "any"
+                  },
+                  "type": {
+                    "example": "any"
+                  },
+                  "description": {
+                    "example": "any"
+                  },
+                  "temperature": {
+                    "example": "any"
+                  },
+                  "price": {
+                    "example": "any"
+                  },
+                  "is_vegetarian": {
+                    "example": "any"
+                  },
+                  "is_vegan": {
+                    "example": "any"
+                  },
+                  "availability": {
+                    "example": "any"
+                  },
+                  "allergens": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
           }
         }
       }
