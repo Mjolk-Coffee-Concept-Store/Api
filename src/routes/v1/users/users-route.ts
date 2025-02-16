@@ -1,12 +1,14 @@
-import { Router } from "express";
-import { Request, Response } from "express";
+import { Router, Request, Response } from "express";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+
 import { AppDataSource } from "../../../data-source";
 import { User } from "../../../entities/User";
 import { ENV } from "../../../config/env";
 import { PermissionsService } from "../../../services/permissionsService";
 import { authMiddleware } from "../../../middlewares/authMiddleware";
+import { SessionsService } from "../../../services/sessionsService";
+
 export const usersRouter = Router();
 
 usersRouter.post("/login", login);
@@ -39,7 +41,7 @@ async function login(req: Request, res: Response) {
 
     return res.json({ token });
   } catch (error) {
-    return res.status(500).json({ message: "Erreur serveur", error });
+    return res.status(500).json({ message: "Internal server error", error });
   }
 }
 
@@ -70,7 +72,7 @@ async function register(req: Request, res: Response) {
 
     return res.json({ message: "User created" });
   } catch (error) {
-    return res.status(500).json({ message: "Server error", error });
+    return res.status(500).json({ message: "Internal server error", error });
   }
 }
 
@@ -81,19 +83,11 @@ async function whoAmI(req: Request, res: Response) {
   const token = req.headers.authorization?.split(" ")[1];
 
   if (!token) {
-    return res.status(401).json({ message: "Token manquant ou non valide" });
+    return res.status(401).json({ message: "Token not provided" });
   }
 
   try {
-    const decoded = jwt.verify(token, ENV.APP_JWT_SECRET as string) as {
-      Id_User: string;
-      permissions: number;
-    };
-
-    const userRepository = AppDataSource.getRepository(User);
-    const user = await userRepository.findOne({
-      where: { Id_User: decoded.Id_User },
-    });
+    const user = await SessionsService.getUserFromRequest(token);
 
     if (!user) {
       return res.status(404).json({ message: "User not found" });
@@ -104,6 +98,6 @@ async function whoAmI(req: Request, res: Response) {
 
     return res.json({ user });
   } catch (err) {
-    return res.status(403).json({ message: "Accès non autorisé" });
+    return res.status(403).json({ message: "Invalid token" });
   }
 }
