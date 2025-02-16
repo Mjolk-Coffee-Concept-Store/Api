@@ -10,8 +10,8 @@ export class ConsumablesOrdered {
   @PrimaryColumn("uuid")
   Id_Consumables_Order: string;
 
-  @Column({ type: "int" })
-  quantity: number;
+  @Column({ type: "boolean", default: false })
+  served: boolean;
 
   @ManyToOne(() => Consumable, (consumable) => consumable.Id_Consumable)
   @JoinColumn({ name: "Id_Consumable" })

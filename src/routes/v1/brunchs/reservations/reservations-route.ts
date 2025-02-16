@@ -2,6 +2,7 @@ import { Router } from "express";
 import { AppDataSource } from "../../../../data-source";
 import { Brunch } from "../../../../entities/Brunch";
 import { BrunchReservation } from "../../../../entities/BrunchReservation";
+import { ordersBrunchRouter } from "./orders/orders-route";
 
 export const brunchReservationsRouter = Router();
 
@@ -10,6 +11,8 @@ brunchReservationsRouter.get("/", getBrunchReservations);
 brunchReservationsRouter.get("/:reservationId", getBrunchReservationById);
 brunchReservationsRouter.put("/:reservationId", updateBrunchReservation);
 brunchReservationsRouter.delete("/:reservationId", deleteBrunchReservation);
+
+brunchReservationsRouter.use("/:reservationId/orders", ordersBrunchRouter);
 
 async function createBrunchReservation(req, res) {
   // #swagger.tags = ['Brunchs Reservations']

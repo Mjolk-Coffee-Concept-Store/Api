@@ -1,20 +1,20 @@
-import { Entity, PrimaryColumn, Column, ManyToOne, JoinColumn } from "typeorm";
+import { Entity, Column, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { BrunchItem } from "./BrunchItem";
-import { BrunchOrder } from "./BrunchOrder";
+import { BrunchReservation } from "./BrunchReservation";
 
 @Entity("brunch_orders_items")
 export class BrunchOrdersItem {
-  @PrimaryColumn("uuid")
-  Id_Brunch_item: string;
+  @PrimaryGeneratedColumn("uuid")
+  Id_Brunch_Item_Order: string;
 
-  @PrimaryColumn("uuid")
-  Id_Brunch_Order: string;
+  @Column({ type: "boolean", default: false })
+  served: boolean;
 
-  @Column({ type: "int" })
-  quantity: number;
-
-  @ManyToOne(() => BrunchOrder, (order) => order.orderItems)
-  order: BrunchOrder;
+  @ManyToOne(
+    () => BrunchReservation,
+    (reservation) => reservation.brunchOrdersItems
+  )
+  reservation: BrunchReservation;
 
   @ManyToOne(() => BrunchItem)
   item: BrunchItem;

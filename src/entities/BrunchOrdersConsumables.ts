@@ -1,21 +1,20 @@
-import { Entity, PrimaryColumn, ManyToOne, JoinColumn, Column } from "typeorm";
-import { BrunchItem } from "./BrunchItem";
+import { Entity, ManyToOne, Column, PrimaryGeneratedColumn } from "typeorm";
 import { Consumable } from "./Consumable";
-import { BrunchOrder } from "./BrunchOrder";
+import { BrunchReservation } from "./BrunchReservation";
 
 @Entity("brunch_orders_consumables")
 export class BrunchOrdersConsumable {
-  @PrimaryColumn("uuid")
-  Id_Consumable: string;
+  @PrimaryGeneratedColumn("uuid")
+  Id_Brunch_Consumable_Order: string;
 
-  @PrimaryColumn("uuid")
-  Id_Brunch_Order: string;
+  @Column({ type: "boolean", default: false })
+  served: boolean;
 
-  @Column({ type: "int" })
-  quantity: number;
-
-  @ManyToOne(() => BrunchOrder, (order) => order.consumables)
-  order: BrunchOrder;
+  @ManyToOne(
+    () => BrunchReservation,
+    (reservation) => reservation.brunchOrdersConsumables
+  )
+  reservation: BrunchReservation;
 
   @ManyToOne(() => Consumable)
   consumable: Consumable;

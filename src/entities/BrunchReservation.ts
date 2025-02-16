@@ -1,13 +1,7 @@
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  OneToMany,
-  ManyToOne,
-  JoinColumn,
-} from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
 import { Brunch } from "./Brunch";
-import { BrunchOrder } from "./BrunchOrder";
+import { BrunchOrdersItem } from "./BrunchOrdersItem";
+import { BrunchOrdersConsumable } from "./BrunchOrdersConsumables";
 
 @Entity("brunch_reservations") // Nom de la table
 export class BrunchReservation {
@@ -38,9 +32,21 @@ export class BrunchReservation {
   @Column({ type: "int", nullable: true })
   table_number: number;
 
-  @ManyToOne(() => Brunch, (brunch) => brunch.reservations)
+  @Column({ type: "timestamp", nullable: true })
+  order_submission_date: Date;
+
+  @Column({ type: "boolean", default: false })
+  ended: boolean;
+
+  @OneToMany(() => Brunch, (brunch) => brunch.reservations)
   brunch: Brunch;
 
-  @OneToMany(() => BrunchOrder, (order) => order.reservations)
-  orders: BrunchOrder[];
+  @OneToMany(() => BrunchOrdersItem, (orderItem) => orderItem.reservation)
+  brunchOrdersItems: BrunchOrdersItem[];
+
+  @OneToMany(
+    () => BrunchOrdersConsumable,
+    (orderConsumable) => orderConsumable.reservation
+  )
+  brunchOrdersConsumables: BrunchOrdersConsumable[];
 }
