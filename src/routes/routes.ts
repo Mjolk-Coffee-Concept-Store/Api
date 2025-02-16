@@ -15,10 +15,6 @@ routes.get("/health", (req, res) => {
   res.send("API is healthy");
 });
 
-routes.get("/version", (req, res) => {
-  res.send(`API version: ${ENV.APP_VERSION}`);
-});
-
 routes.get("*", (req, res) => {
   res.status(404).send("Not Found");
 });

@@ -14,6 +14,9 @@ usersRouter.post("/register", register);
 usersRouter.get("/whoami", authMiddleware, whoAmI);
 
 async function login(req: Request, res: Response) {
+  // #swagger.tags = ['Users']
+  // #swagger.summary = 'Login with username and password'
+
   const { username, password } = req.body;
 
   try {
@@ -41,6 +44,9 @@ async function login(req: Request, res: Response) {
 }
 
 async function register(req: Request, res: Response) {
+  // #swagger.tags = ['Users']
+  // #swagger.summary = 'Register a new user'
+
   const { username, password, full_name, role } = req.body;
 
   try {
@@ -68,8 +74,10 @@ async function register(req: Request, res: Response) {
   }
 }
 
-// Get user from bearer token
 async function whoAmI(req: Request, res: Response) {
+  // #swagger.tags = ['Users']
+  // #swagger.summary = 'Get user information from token'
+
   const token = req.headers.authorization?.split(" ")[1];
 
   if (!token) {

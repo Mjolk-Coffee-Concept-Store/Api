@@ -5,11 +5,29 @@ const doc = {
     version: "v1.0.0",
     title: "Mjölk API",
     description: "API for Mjölk",
+    contact: {
+      name: "Dev Support Team",
+      email: "ericphlpp@proton.me",
+    },
+    license: {
+      name: "MIT",
+      url: "https://opensource.org/licenses/MIT",
+    },
   },
   servers: [
     {
-      url: "http://localhost:3000/api",
-      description: "",
+      url: "http://localhost:3000/api/v1",
+      description: "Development server",
+    },
+    {
+      url: "https://mjolk/api/v1",
+      description: "Production server",
+    },
+  ],
+  tags: [
+    {
+      name: "Users",
+      description: "Operations about Backoffice users",
     },
   ],
   components: {
@@ -17,6 +35,9 @@ const doc = {
       bearerAuth: {
         type: "http",
         scheme: "bearer",
+        bearerFormat: "JWT",
+        description:
+          "Enter your bearer token in the format **Bearer &lt;token&gt;**",
       },
     },
   },
@@ -28,6 +49,6 @@ const doc = {
 };
 
 const outputFile = "./swagger_output.json";
-const endpointsFiles = ["./src/routes/routes.ts"];
+const endpointsFiles = ["./src/routes/v1/routesV1.ts"];
 
 swaggerAutogen({ openapi: "3.0.0" })(outputFile, endpointsFiles, doc);
