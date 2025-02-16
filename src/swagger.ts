@@ -28,12 +28,28 @@ const doc = {
   ],
   tags: [
     {
+      name: "API",
+      description: "API Description",
+    },
+    {
       name: "Users",
       description: "Operations about Backoffice users",
     },
     {
       name: "Recommendations",
       description: "Operations about Recommendations",
+    },
+    {
+      name: "Brunchs",
+      description: "Operations about Brunchs",
+    },
+    {
+      name: "Brunchs Items",
+      description: "Operations about Brunchs Items",
+    },
+    {
+      name: "Brunchs Reservations",
+      description: "Operations about Brunchs Reservations",
     },
   ],
   components: {

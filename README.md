@@ -46,3 +46,13 @@ This repository contains the core API for the coffee shop Mkölk. The API is bui
 | DELETE | /brunchs/:id/items/:itemId    | Deletes a brunch item                | Requires authentication |
 | DELETE | /brunchs/:id/items            | Deletes all brunch items             | Requires authentication |
 | PUT    | /brunchs/:id/items/:itemId    | Updates a brunch item                | Requires authentication |
+
+#### Brunch Reservations
+
+| Method | Route                         | Description                  | Security                |
+| ------ | ----------------------------- | ---------------------------- | ----------------------- |
+| GET    | /brunchs/:id/reservations     | Gets brunch reservations     | Requires authentication |
+| GET    | /brunchs/:id/reservations/:id | Gets a brunch reservation    | Requires authentication |
+| POST   | /brunchs/:id/reservations     | Creates a brunch reservation | Requires authentication |
+| DELETE | /brunchs/:id/reservations/:id | Deletes a brunch reservation | Requires authentication |
+| PUT    | /brunchs/:id/reservations/:id | Updates a brunch reservation | Requires authentication |

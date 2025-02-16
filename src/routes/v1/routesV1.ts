@@ -10,5 +10,8 @@ v1Routes.use("/recommendations", recommendationsRouter);
 v1Routes.use("/brunchs", brunchsRouter);
 
 v1Routes.get("/", (req, res) => {
+  // #swagger.tags = ['API']
+  // #swagger.summary = 'API v1'
+
   res.send("Mkölk API v1");
 });
