@@ -4,19 +4,19 @@ import { Brunch } from "../../../../entities/Brunch";
 import { BrunchItem } from "../../../../entities/BrunchItem";
 import { authMiddleware } from "../../../../middlewares/authMiddleware";
 
-export const brunchsItemRouter = Router();
+export const brunchItemsRouter = Router();
 
-brunchsItemRouter.post("/", authMiddleware, createBrunchItems);
-brunchsItemRouter.post(
+brunchItemsRouter.post("/", authMiddleware, createBrunchItems);
+brunchItemsRouter.post(
   "/collection",
   authMiddleware,
   createBrunchItemsCollection
 );
-brunchsItemRouter.get("/", getBrunchItems);
-brunchsItemRouter.get("/:itemId", getBrunchItemById);
-brunchsItemRouter.put("/:itemId", updateBrunchItem);
-brunchsItemRouter.delete("/:itemId", authMiddleware, deleteBrunchItem);
-brunchsItemRouter.delete("/", authMiddleware, deleteBrunchItems);
+brunchItemsRouter.get("/", getBrunchItems);
+brunchItemsRouter.get("/:itemId", getBrunchItemById);
+brunchItemsRouter.put("/:itemId", updateBrunchItem);
+brunchItemsRouter.delete("/:itemId", authMiddleware, deleteBrunchItem);
+brunchItemsRouter.delete("/", authMiddleware, deleteBrunchItems);
 
 async function getBrunchItems(req, res) {
   // #swagger.tags = ['Brunchs Items']
