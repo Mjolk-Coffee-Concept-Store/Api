@@ -14,7 +14,7 @@ export const authMiddleware = (
   const token = req.headers.authorization?.split(" ")[1];
 
   if (!token) {
-    return res.status(401).json({ message: "Token manquant ou non valide" });
+    return res.status(401).json({ message: "Missing token" });
   }
 
   try {
@@ -25,6 +25,6 @@ export const authMiddleware = (
     req.user = decoded;
     next();
   } catch (err) {
-    return res.status(403).json({ message: "Accès non autorisé" });
+    return res.status(403).json({ message: "Unauthorized" });
   }
 };
