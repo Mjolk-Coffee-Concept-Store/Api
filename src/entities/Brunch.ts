@@ -13,9 +13,9 @@ export class Brunch {
   @Column({ type: "text" })
   description: string;
 
-  @OneToMany(() => BrunchReservation, (reservation) => reservation.brunch)
-  brunchReservations: BrunchReservation[];
-
   @OneToMany(() => BrunchItem, (item) => item.brunch)
-  brunchItems: BrunchItem[];
+  items: BrunchItem[];
+
+  @OneToMany(() => BrunchReservation, (reservation) => reservation.brunch)
+  reservations: BrunchReservation[];
 }

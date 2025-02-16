@@ -8,6 +8,7 @@ import {
 } from "typeorm";
 import { BrunchReservation } from "./BrunchReservation";
 import { BrunchOrdersItem } from "./BrunchOrdersItem";
+import { BrunchOrdersConsumable } from "./BrunchOrdersConsumables";
 
 @Entity("brunch_orders") // Nom de la table
 export class BrunchOrder {
@@ -17,10 +18,15 @@ export class BrunchOrder {
   @Column({ type: "timestamp" })
   submission_date: Date;
 
-  @ManyToOne(() => BrunchReservation, (reservation) => reservation.brunchOrders)
-  @JoinColumn({ name: "Id_Brunch_reservation" })
-  brunchReservation: BrunchReservation;
+  @ManyToOne(() => BrunchReservation, (reservation) => reservation.orders)
+  reservations: BrunchReservation;
 
-  @OneToMany(() => BrunchOrdersItem, (orderItem) => orderItem.brunchOrder)
-  brunchOrdersItems: BrunchOrdersItem[];
+  @OneToMany(() => BrunchOrdersItem, (orderItem) => orderItem.order)
+  orderItems: BrunchOrdersItem[];
+
+  @OneToMany(
+    () => BrunchOrdersConsumable,
+    (orderConsumable) => orderConsumable.order
+  )
+  consumables: BrunchOrdersConsumable[];
 }

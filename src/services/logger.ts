@@ -1,6 +1,6 @@
 import { Repository } from "typeorm";
-import { AppDataSource } from "./data-source";
-import { Log } from "./entities/Log";
+import { AppDataSource } from "../data-source";
+import { Log } from "../entities/Log";
 
 enum LogLevels {
   DEBUG,

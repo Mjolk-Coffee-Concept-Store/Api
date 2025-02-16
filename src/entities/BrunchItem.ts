@@ -8,9 +8,8 @@ import {
 } from "typeorm";
 import { Brunch } from "./Brunch";
 import { BrunchOrdersItem } from "./BrunchOrdersItem";
-import { BrunchItemsConsumable } from "./BrunchItemsConsumable";
 
-@Entity("brunch_items") // Nom de la table
+@Entity("brunch_items")
 export class BrunchItem {
   @PrimaryGeneratedColumn("uuid")
   Id_Brunch_item: string;
@@ -39,16 +38,6 @@ export class BrunchItem {
   @Column({ type: "decimal", precision: 10, scale: 2 })
   hidden_price: number;
 
-  @ManyToOne(() => Brunch, (brunch) => brunch.brunchItems)
-  @JoinColumn({ name: "Id_Brunch" })
+  @ManyToOne(() => Brunch, (brunch) => brunch.items)
   brunch: Brunch;
-
-  @OneToMany(() => BrunchOrdersItem, (orderItem) => orderItem.brunchItem)
-  brunchItemsOrders: BrunchOrdersItem[];
-
-  @OneToMany(
-    () => BrunchItemsConsumable,
-    (brunchItemsConsumable) => brunchItemsConsumable.brunchItem
-  )
-  brunchItemsConsumables: BrunchItemsConsumable[];
 }

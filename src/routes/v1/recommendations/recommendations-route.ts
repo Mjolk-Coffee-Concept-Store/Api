@@ -1,13 +1,12 @@
 import { Router } from "express";
 import { AppDataSource } from "../../../data-source";
 import { Recommendation } from "../../../entities/Recommendation";
-import { PermissionsService } from "../../../services/permissionsService";
 import { authMiddleware } from "../../../middlewares/authMiddleware";
 
 export const recommendationsRouter = Router();
 
-recommendationsRouter.get("/", authMiddleware, getRecommendations);
 recommendationsRouter.post("/", createRecommendation);
+recommendationsRouter.get("/", authMiddleware, getRecommendations);
 recommendationsRouter.get("/:id", authMiddleware, getRecommendationById);
 recommendationsRouter.delete("/:id", authMiddleware, deleteRecommendation);
 

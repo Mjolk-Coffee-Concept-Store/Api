@@ -38,10 +38,9 @@ export class BrunchReservation {
   @Column({ type: "int", nullable: true })
   table_number: number;
 
-  @ManyToOne(() => Brunch, (brunch) => brunch.brunchReservations)
-  @JoinColumn({ name: "Id_Brunch" })
+  @ManyToOne(() => Brunch, (brunch) => brunch.reservations)
   brunch: Brunch;
 
-  @OneToMany(() => BrunchOrder, (order) => order.brunchReservation)
-  brunchOrders: BrunchOrder[];
+  @OneToMany(() => BrunchOrder, (order) => order.reservations)
+  orders: BrunchOrder[];
 }

@@ -13,11 +13,9 @@ export class BrunchOrdersItem {
   @Column({ type: "int" })
   quantity: number;
 
-  @ManyToOne(() => BrunchItem, (item) => item.brunchItemsOrders)
-  @JoinColumn({ name: "Id_Brunch_item" })
-  brunchItem: BrunchItem;
+  @ManyToOne(() => BrunchOrder, (order) => order.orderItems)
+  order: BrunchOrder;
 
-  @ManyToOne(() => BrunchOrder, (order) => order.brunchOrdersItems)
-  @JoinColumn({ name: "Id_Brunch_Order" })
-  brunchOrder: BrunchOrder;
+  @ManyToOne(() => BrunchItem)
+  item: BrunchItem;
 }
