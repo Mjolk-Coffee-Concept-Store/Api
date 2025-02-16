@@ -72,7 +72,7 @@ async function getConsumableById(req, res) {
   try {
     const consumablesRepository = AppDataSource.getRepository(Consumable);
     const consumable = await consumablesRepository.findOne({
-      where: { Id_Consumable: id },
+      where: { id: id },
     });
 
     if (!consumable) {
@@ -93,7 +93,7 @@ async function deleteConsumable(req, res) {
   try {
     const consumablesRepository = AppDataSource.getRepository(Consumable);
     const consumable = await consumablesRepository.findOne({
-      where: { Id_Consumable: id },
+      where: { id: id },
     });
 
     if (!consumable) {
@@ -128,7 +128,7 @@ async function updateConsumable(req, res) {
   try {
     const consumablesRepository = AppDataSource.getRepository(Consumable);
     const consumable = await consumablesRepository.findOne({
-      where: { Id_Consumable: id },
+      where: { id: id },
     });
 
     if (!consumable) {

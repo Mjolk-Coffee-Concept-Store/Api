@@ -1,0 +1,122 @@
+import { MigrationInterface, QueryRunner } from "typeorm";
+
+export class UpdateTable1739738185847 implements MigrationInterface {
+    name = 'UpdateTable1739738185847'
+
+    public async up(queryRunner: QueryRunner): Promise<void> {
+        await queryRunner.query(`ALTER TABLE "brunch_items" DROP CONSTRAINT "FK_86e890601aeb771568f15184dd8"`);
+        await queryRunner.query(`ALTER TABLE "brunch_orders_items" DROP CONSTRAINT "FK_d69e5053b396f3c05d072ff12e1"`);
+        await queryRunner.query(`ALTER TABLE "brunch_orders_items" DROP CONSTRAINT "FK_1110187d817d2bc0a4edaabd9dd"`);
+        await queryRunner.query(`ALTER TABLE "brunch_orders_consumables" DROP CONSTRAINT "FK_ef938bc030d01fc73e973754f69"`);
+        await queryRunner.query(`ALTER TABLE "brunch_orders_consumables" DROP CONSTRAINT "FK_e9d690c1d68b1fbe40f295ee299"`);
+        await queryRunner.query(`ALTER TABLE "brunch_reservations" DROP CONSTRAINT "FK_68903426ec7b30d854f090c9283"`);
+        await queryRunner.query(`ALTER TABLE "users" RENAME COLUMN "Id_User" TO "id"`);
+        await queryRunner.query(`ALTER TABLE "users" RENAME CONSTRAINT "PK_8152d8f10e5af5e45141527e92f" TO "PK_a3ffb1c0c8416b9fc6f907b7433"`);
+        await queryRunner.query(`ALTER TABLE "recommendations" RENAME COLUMN "Id_Recommendation" TO "id"`);
+        await queryRunner.query(`ALTER TABLE "recommendations" RENAME CONSTRAINT "PK_587b68f65f86383691649d179c9" TO "PK_23a8d2db26db8cabb6ae9d6cd87"`);
+        await queryRunner.query(`ALTER TABLE "partnership" RENAME COLUMN "Id_Partnership" TO "id"`);
+        await queryRunner.query(`ALTER TABLE "partnership" RENAME CONSTRAINT "PK_94c9a4659826fd4bbd29fce2b7b" TO "PK_f1bf1be9f475497d8b396d4cc56"`);
+        await queryRunner.query(`ALTER TABLE "logs" RENAME COLUMN "Id_Log" TO "id"`);
+        await queryRunner.query(`ALTER TABLE "logs" RENAME CONSTRAINT "PK_2d10ed9ec221096532badec8191" TO "PK_fb1b805f2f7795de79fa69340ba"`);
+        await queryRunner.query(`ALTER SEQUENCE "logs_Id_Log_seq" RENAME TO "logs_id_seq"`);
+        await queryRunner.query(`ALTER TABLE "consumables" RENAME COLUMN "Id_Consumable" TO "id"`);
+        await queryRunner.query(`ALTER TABLE "consumables" RENAME CONSTRAINT "PK_ea2bbccbc8fa955b5b54939f7b1" TO "PK_88ce43ef80ea7ac74b91dbd8614"`);
+        await queryRunner.query(`ALTER TABLE "consumables_orders" RENAME COLUMN "Id_Consumables_Order" TO "id"`);
+        await queryRunner.query(`ALTER TABLE "consumables_orders" RENAME CONSTRAINT "PK_77f3a0ff88395f3caee8edeae34" TO "PK_6416c6f6c99e9c3be84503af51b"`);
+        await queryRunner.query(`ALTER TABLE "brunchs" RENAME COLUMN "Id_Brunch" TO "id"`);
+        await queryRunner.query(`ALTER TABLE "brunchs" RENAME CONSTRAINT "PK_90d60ac93b99ed51626959acbe9" TO "PK_4556981d29ba761d6b141a28b06"`);
+        await queryRunner.query(`ALTER TABLE "brunch_items" DROP COLUMN "brunchIdBrunch"`);
+        await queryRunner.query(`ALTER TABLE "brunch_items" DROP CONSTRAINT "PK_7827cb97f3008e596719b5ee368"`);
+        await queryRunner.query(`ALTER TABLE "brunch_items" DROP COLUMN "Id_Brunch_item"`);
+        await queryRunner.query(`ALTER TABLE "brunch_orders_items" DROP CONSTRAINT "PK_790362ff15ecd2844ccd1a3cf92"`);
+        await queryRunner.query(`ALTER TABLE "brunch_orders_items" DROP COLUMN "Id_Brunch_Item_Order"`);
+        await queryRunner.query(`ALTER TABLE "brunch_orders_items" DROP COLUMN "reservationIdBrunchReservation"`);
+        await queryRunner.query(`ALTER TABLE "brunch_orders_items" DROP COLUMN "itemIdBrunchItem"`);
+        await queryRunner.query(`ALTER TABLE "brunch_orders_consumables" DROP CONSTRAINT "PK_2b06b6ee71c2ea196a266b96bc5"`);
+        await queryRunner.query(`ALTER TABLE "brunch_orders_consumables" DROP COLUMN "Id_Brunch_Consumable_Order"`);
+        await queryRunner.query(`ALTER TABLE "brunch_orders_consumables" DROP COLUMN "reservationIdBrunchReservation"`);
+        await queryRunner.query(`ALTER TABLE "brunch_orders_consumables" DROP COLUMN "consumableIdConsumable"`);
+        await queryRunner.query(`ALTER TABLE "brunch_reservations" DROP CONSTRAINT "PK_99a7463298feb5825746cd054a6"`);
+        await queryRunner.query(`ALTER TABLE "brunch_reservations" DROP COLUMN "Id_Brunch_reservation"`);
+        await queryRunner.query(`ALTER TABLE "brunch_reservations" DROP COLUMN "brunchIdBrunch"`);
+        await queryRunner.query(`ALTER TABLE "brunch_items" ADD "id" uuid NOT NULL DEFAULT uuid_generate_v4()`);
+        await queryRunner.query(`ALTER TABLE "brunch_items" ADD CONSTRAINT "PK_2922cf952e91aaa95aa5bd37fef" PRIMARY KEY ("id")`);
+        await queryRunner.query(`ALTER TABLE "brunch_items" ADD "brunchId" uuid`);
+        await queryRunner.query(`ALTER TABLE "brunch_orders_items" ADD "id" uuid NOT NULL DEFAULT uuid_generate_v4()`);
+        await queryRunner.query(`ALTER TABLE "brunch_orders_items" ADD CONSTRAINT "PK_0042a2cc3d64a74e8f4f3f16d7b" PRIMARY KEY ("id")`);
+        await queryRunner.query(`ALTER TABLE "brunch_orders_items" ADD "reservationId" uuid`);
+        await queryRunner.query(`ALTER TABLE "brunch_orders_items" ADD "itemId" uuid`);
+        await queryRunner.query(`ALTER TABLE "brunch_orders_consumables" ADD "id" uuid NOT NULL DEFAULT uuid_generate_v4()`);
+        await queryRunner.query(`ALTER TABLE "brunch_orders_consumables" ADD CONSTRAINT "PK_f5c6cf610c6c79f42c87dc8e4c8" PRIMARY KEY ("id")`);
+        await queryRunner.query(`ALTER TABLE "brunch_orders_consumables" ADD "reservationId" uuid`);
+        await queryRunner.query(`ALTER TABLE "brunch_orders_consumables" ADD "consumableId" uuid`);
+        await queryRunner.query(`ALTER TABLE "brunch_reservations" ADD "id" uuid NOT NULL DEFAULT uuid_generate_v4()`);
+        await queryRunner.query(`ALTER TABLE "brunch_reservations" ADD CONSTRAINT "PK_daefde96f2aeaf0a43dfc7d9d95" PRIMARY KEY ("id")`);
+        await queryRunner.query(`ALTER TABLE "brunch_reservations" ADD "brunchId" uuid`);
+        await queryRunner.query(`ALTER TABLE "brunch_items" ADD CONSTRAINT "FK_8f150a512e52e186b9214fe6187" FOREIGN KEY ("brunchId") REFERENCES "brunchs"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`);
+        await queryRunner.query(`ALTER TABLE "brunch_orders_items" ADD CONSTRAINT "FK_fbcb4c77e782c146cd5f9f17d9e" FOREIGN KEY ("reservationId") REFERENCES "brunch_reservations"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`);
+        await queryRunner.query(`ALTER TABLE "brunch_orders_items" ADD CONSTRAINT "FK_fa5debf4cab71ca82d6acd3a67f" FOREIGN KEY ("itemId") REFERENCES "brunch_items"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`);
+        await queryRunner.query(`ALTER TABLE "brunch_orders_consumables" ADD CONSTRAINT "FK_2479bbe3893e84bd4ee20d005cb" FOREIGN KEY ("reservationId") REFERENCES "brunch_reservations"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`);
+        await queryRunner.query(`ALTER TABLE "brunch_orders_consumables" ADD CONSTRAINT "FK_192d2724deed1086980b862bbe6" FOREIGN KEY ("consumableId") REFERENCES "consumables"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`);
+        await queryRunner.query(`ALTER TABLE "brunch_reservations" ADD CONSTRAINT "FK_1c42cab982db2068e526e8e342c" FOREIGN KEY ("brunchId") REFERENCES "brunchs"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`);
+    }
+
+    public async down(queryRunner: QueryRunner): Promise<void> {
+        await queryRunner.query(`ALTER TABLE "brunch_reservations" DROP CONSTRAINT "FK_1c42cab982db2068e526e8e342c"`);
+        await queryRunner.query(`ALTER TABLE "brunch_orders_consumables" DROP CONSTRAINT "FK_192d2724deed1086980b862bbe6"`);
+        await queryRunner.query(`ALTER TABLE "brunch_orders_consumables" DROP CONSTRAINT "FK_2479bbe3893e84bd4ee20d005cb"`);
+        await queryRunner.query(`ALTER TABLE "brunch_orders_items" DROP CONSTRAINT "FK_fa5debf4cab71ca82d6acd3a67f"`);
+        await queryRunner.query(`ALTER TABLE "brunch_orders_items" DROP CONSTRAINT "FK_fbcb4c77e782c146cd5f9f17d9e"`);
+        await queryRunner.query(`ALTER TABLE "brunch_items" DROP CONSTRAINT "FK_8f150a512e52e186b9214fe6187"`);
+        await queryRunner.query(`ALTER TABLE "brunch_reservations" DROP COLUMN "brunchId"`);
+        await queryRunner.query(`ALTER TABLE "brunch_reservations" DROP CONSTRAINT "PK_daefde96f2aeaf0a43dfc7d9d95"`);
+        await queryRunner.query(`ALTER TABLE "brunch_reservations" DROP COLUMN "id"`);
+        await queryRunner.query(`ALTER TABLE "brunch_orders_consumables" DROP COLUMN "consumableId"`);
+        await queryRunner.query(`ALTER TABLE "brunch_orders_consumables" DROP COLUMN "reservationId"`);
+        await queryRunner.query(`ALTER TABLE "brunch_orders_consumables" DROP CONSTRAINT "PK_f5c6cf610c6c79f42c87dc8e4c8"`);
+        await queryRunner.query(`ALTER TABLE "brunch_orders_consumables" DROP COLUMN "id"`);
+        await queryRunner.query(`ALTER TABLE "brunch_orders_items" DROP COLUMN "itemId"`);
+        await queryRunner.query(`ALTER TABLE "brunch_orders_items" DROP COLUMN "reservationId"`);
+        await queryRunner.query(`ALTER TABLE "brunch_orders_items" DROP CONSTRAINT "PK_0042a2cc3d64a74e8f4f3f16d7b"`);
+        await queryRunner.query(`ALTER TABLE "brunch_orders_items" DROP COLUMN "id"`);
+        await queryRunner.query(`ALTER TABLE "brunch_items" DROP COLUMN "brunchId"`);
+        await queryRunner.query(`ALTER TABLE "brunch_items" DROP CONSTRAINT "PK_2922cf952e91aaa95aa5bd37fef"`);
+        await queryRunner.query(`ALTER TABLE "brunch_items" DROP COLUMN "id"`);
+        await queryRunner.query(`ALTER TABLE "brunch_reservations" ADD "brunchIdBrunch" uuid`);
+        await queryRunner.query(`ALTER TABLE "brunch_reservations" ADD "Id_Brunch_reservation" uuid NOT NULL DEFAULT uuid_generate_v4()`);
+        await queryRunner.query(`ALTER TABLE "brunch_reservations" ADD CONSTRAINT "PK_99a7463298feb5825746cd054a6" PRIMARY KEY ("Id_Brunch_reservation")`);
+        await queryRunner.query(`ALTER TABLE "brunch_orders_consumables" ADD "consumableIdConsumable" uuid`);
+        await queryRunner.query(`ALTER TABLE "brunch_orders_consumables" ADD "reservationIdBrunchReservation" uuid`);
+        await queryRunner.query(`ALTER TABLE "brunch_orders_consumables" ADD "Id_Brunch_Consumable_Order" uuid NOT NULL DEFAULT uuid_generate_v4()`);
+        await queryRunner.query(`ALTER TABLE "brunch_orders_consumables" ADD CONSTRAINT "PK_2b06b6ee71c2ea196a266b96bc5" PRIMARY KEY ("Id_Brunch_Consumable_Order")`);
+        await queryRunner.query(`ALTER TABLE "brunch_orders_items" ADD "itemIdBrunchItem" uuid`);
+        await queryRunner.query(`ALTER TABLE "brunch_orders_items" ADD "reservationIdBrunchReservation" uuid`);
+        await queryRunner.query(`ALTER TABLE "brunch_orders_items" ADD "Id_Brunch_Item_Order" uuid NOT NULL DEFAULT uuid_generate_v4()`);
+        await queryRunner.query(`ALTER TABLE "brunch_orders_items" ADD CONSTRAINT "PK_790362ff15ecd2844ccd1a3cf92" PRIMARY KEY ("Id_Brunch_Item_Order")`);
+        await queryRunner.query(`ALTER TABLE "brunch_items" ADD "Id_Brunch_item" uuid NOT NULL DEFAULT uuid_generate_v4()`);
+        await queryRunner.query(`ALTER TABLE "brunch_items" ADD CONSTRAINT "PK_7827cb97f3008e596719b5ee368" PRIMARY KEY ("Id_Brunch_item")`);
+        await queryRunner.query(`ALTER TABLE "brunch_items" ADD "brunchIdBrunch" uuid`);
+        await queryRunner.query(`ALTER TABLE "brunchs" RENAME CONSTRAINT "PK_4556981d29ba761d6b141a28b06" TO "PK_90d60ac93b99ed51626959acbe9"`);
+        await queryRunner.query(`ALTER TABLE "brunchs" RENAME COLUMN "id" TO "Id_Brunch"`);
+        await queryRunner.query(`ALTER TABLE "consumables_orders" RENAME CONSTRAINT "PK_6416c6f6c99e9c3be84503af51b" TO "PK_77f3a0ff88395f3caee8edeae34"`);
+        await queryRunner.query(`ALTER TABLE "consumables_orders" RENAME COLUMN "id" TO "Id_Consumables_Order"`);
+        await queryRunner.query(`ALTER TABLE "consumables" RENAME CONSTRAINT "PK_88ce43ef80ea7ac74b91dbd8614" TO "PK_ea2bbccbc8fa955b5b54939f7b1"`);
+        await queryRunner.query(`ALTER TABLE "consumables" RENAME COLUMN "id" TO "Id_Consumable"`);
+        await queryRunner.query(`ALTER SEQUENCE "logs_id_seq" RENAME TO "logs_Id_Log_seq"`);
+        await queryRunner.query(`ALTER TABLE "logs" RENAME CONSTRAINT "PK_fb1b805f2f7795de79fa69340ba" TO "PK_2d10ed9ec221096532badec8191"`);
+        await queryRunner.query(`ALTER TABLE "logs" RENAME COLUMN "id" TO "Id_Log"`);
+        await queryRunner.query(`ALTER TABLE "partnership" RENAME CONSTRAINT "PK_f1bf1be9f475497d8b396d4cc56" TO "PK_94c9a4659826fd4bbd29fce2b7b"`);
+        await queryRunner.query(`ALTER TABLE "partnership" RENAME COLUMN "id" TO "Id_Partnership"`);
+        await queryRunner.query(`ALTER TABLE "recommendations" RENAME CONSTRAINT "PK_23a8d2db26db8cabb6ae9d6cd87" TO "PK_587b68f65f86383691649d179c9"`);
+        await queryRunner.query(`ALTER TABLE "recommendations" RENAME COLUMN "id" TO "Id_Recommendation"`);
+        await queryRunner.query(`ALTER TABLE "users" RENAME CONSTRAINT "PK_a3ffb1c0c8416b9fc6f907b7433" TO "PK_8152d8f10e5af5e45141527e92f"`);
+        await queryRunner.query(`ALTER TABLE "users" RENAME COLUMN "id" TO "Id_User"`);
+        await queryRunner.query(`ALTER TABLE "brunch_reservations" ADD CONSTRAINT "FK_68903426ec7b30d854f090c9283" FOREIGN KEY ("brunchIdBrunch") REFERENCES "brunchs"("Id_Brunch") ON DELETE NO ACTION ON UPDATE NO ACTION`);
+        await queryRunner.query(`ALTER TABLE "brunch_orders_consumables" ADD CONSTRAINT "FK_e9d690c1d68b1fbe40f295ee299" FOREIGN KEY ("reservationIdBrunchReservation") REFERENCES "brunch_reservations"("Id_Brunch_reservation") ON DELETE NO ACTION ON UPDATE NO ACTION`);
+        await queryRunner.query(`ALTER TABLE "brunch_orders_consumables" ADD CONSTRAINT "FK_ef938bc030d01fc73e973754f69" FOREIGN KEY ("consumableIdConsumable") REFERENCES "consumables"("Id_Consumable") ON DELETE NO ACTION ON UPDATE NO ACTION`);
+        await queryRunner.query(`ALTER TABLE "brunch_orders_items" ADD CONSTRAINT "FK_1110187d817d2bc0a4edaabd9dd" FOREIGN KEY ("reservationIdBrunchReservation") REFERENCES "brunch_reservations"("Id_Brunch_reservation") ON DELETE NO ACTION ON UPDATE NO ACTION`);
+        await queryRunner.query(`ALTER TABLE "brunch_orders_items" ADD CONSTRAINT "FK_d69e5053b396f3c05d072ff12e1" FOREIGN KEY ("itemIdBrunchItem") REFERENCES "brunch_items"("Id_Brunch_item") ON DELETE NO ACTION ON UPDATE NO ACTION`);
+        await queryRunner.query(`ALTER TABLE "brunch_items" ADD CONSTRAINT "FK_86e890601aeb771568f15184dd8" FOREIGN KEY ("brunchIdBrunch") REFERENCES "brunchs"("Id_Brunch") ON DELETE NO ACTION ON UPDATE NO ACTION`);
+    }
+
+}

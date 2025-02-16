@@ -3,7 +3,7 @@ import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
 @Entity("recommendations")
 export class Recommendation {
   @PrimaryGeneratedColumn("uuid")
-  Id_Recommendation: string;
+  id: string;
 
   @Column({ type: "varchar", length: 50 })
   email: string;

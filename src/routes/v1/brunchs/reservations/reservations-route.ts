@@ -6,13 +6,13 @@ import { ordersBrunchRouter } from "./orders/orders-route";
 
 export const brunchReservationsRouter = Router();
 
+brunchReservationsRouter.use("/:reservationId/orders", ordersBrunchRouter);
+
 brunchReservationsRouter.post("/", createBrunchReservation);
 brunchReservationsRouter.get("/", getBrunchReservations);
 brunchReservationsRouter.get("/:reservationId", getBrunchReservationById);
 brunchReservationsRouter.put("/:reservationId", updateBrunchReservation);
 brunchReservationsRouter.delete("/:reservationId", deleteBrunchReservation);
-
-brunchReservationsRouter.use("/:reservationId/orders", ordersBrunchRouter);
 
 async function createBrunchReservation(req, res) {
   // #swagger.tags = ['Brunchs Reservations']
@@ -33,7 +33,7 @@ async function createBrunchReservation(req, res) {
   try {
     const brunchsRepository = AppDataSource.getRepository(Brunch);
     const brunch = await brunchsRepository.findOne({
-      where: { Id_Brunch: id },
+      where: { id: id },
     });
 
     if (!brunch) {
@@ -72,7 +72,7 @@ async function getBrunchReservations(req, res) {
   try {
     const brunchsRepository = AppDataSource.getRepository(Brunch);
     const brunch = await brunchsRepository.findOne({
-      where: { Id_Brunch: id },
+      where: { id: id },
       relations: ["reservations"],
     });
 
@@ -95,7 +95,7 @@ async function getBrunchReservationById(req, res) {
   try {
     const brunchsRepository = AppDataSource.getRepository(Brunch);
     const brunch = await brunchsRepository.findOne({
-      where: { Id_Brunch: id },
+      where: { id: id },
       relations: ["reservations"],
     });
 
@@ -104,7 +104,7 @@ async function getBrunchReservationById(req, res) {
     }
 
     const reservation = brunch.reservations.find(
-      (reservation) => reservation.Id_Brunch_reservation === reservationId
+      (reservation) => reservation.id === reservationId
     );
 
     if (!reservation) {
@@ -136,7 +136,7 @@ async function updateBrunchReservation(req, res) {
   try {
     const brunchsRepository = AppDataSource.getRepository(Brunch);
     const brunch = await brunchsRepository.findOne({
-      where: { Id_Brunch: id },
+      where: { id: id },
       relations: ["reservations"],
     });
 
@@ -145,7 +145,7 @@ async function updateBrunchReservation(req, res) {
     }
 
     const reservation = brunch.reservations.find(
-      (reservation) => reservation.Id_Brunch_reservation === reservationId
+      (reservation) => reservation.id === reservationId
     );
 
     if (!reservation) {
@@ -180,7 +180,7 @@ async function deleteBrunchReservation(req, res) {
   try {
     const brunchsRepository = AppDataSource.getRepository(Brunch);
     const brunch = await brunchsRepository.findOne({
-      where: { Id_Brunch: id },
+      where: { id: id },
       relations: ["reservations"],
     });
 
@@ -189,7 +189,7 @@ async function deleteBrunchReservation(req, res) {
     }
 
     const reservation = brunch.reservations.find(
-      (reservation) => reservation.Id_Brunch_reservation === reservationId
+      (reservation) => reservation.id === reservationId
     );
 
     if (!reservation) {

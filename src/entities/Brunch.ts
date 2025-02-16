@@ -5,7 +5,7 @@ import { BrunchItem } from "./BrunchItem";
 @Entity("brunchs")
 export class Brunch {
   @PrimaryGeneratedColumn("uuid")
-  Id_Brunch: string;
+  id: string;
 
   @Column({ type: "varchar", length: 255 })
   name: string;

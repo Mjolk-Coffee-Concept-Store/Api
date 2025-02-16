@@ -42,7 +42,7 @@ export class SessionsService {
     if (!userId) return undefined;
 
     const userRepository = AppDataSource.getRepository(User);
-    const user = userRepository.findOne({ where: { Id_User: userId } });
+    const user = userRepository.findOne({ where: { id: userId } });
 
     return user;
   }

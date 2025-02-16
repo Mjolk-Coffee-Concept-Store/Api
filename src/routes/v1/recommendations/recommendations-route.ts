@@ -61,7 +61,7 @@ async function getRecommendationById(req, res) {
     const recommendationsRepository =
       AppDataSource.getRepository(Recommendation);
     const recommendation = await recommendationsRepository.findOne({
-      where: { Id_Recommendation: id },
+      where: { id: id },
     });
 
     if (!recommendation) {
@@ -83,7 +83,7 @@ async function deleteRecommendation(req, res) {
     const recommendationsRepository =
       AppDataSource.getRepository(Recommendation);
     const recommendation = await recommendationsRepository.findOne({
-      where: { Id_Recommendation: id },
+      where: { id: id },
     });
 
     if (!recommendation) {

@@ -5,10 +5,13 @@ import { BrunchReservation } from "./BrunchReservation";
 @Entity("brunch_orders_items")
 export class BrunchOrdersItem {
   @PrimaryGeneratedColumn("uuid")
-  Id_Brunch_Item_Order: string;
+  id: string;
 
   @Column({ type: "boolean", default: false })
   served: boolean;
+
+  @Column({ type: "text", nullable: true })
+  comments: string;
 
   @ManyToOne(
     () => BrunchReservation,

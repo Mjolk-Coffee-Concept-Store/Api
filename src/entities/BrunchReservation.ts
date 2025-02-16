@@ -1,4 +1,10 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  OneToMany,
+  ManyToOne,
+} from "typeorm";
 import { Brunch } from "./Brunch";
 import { BrunchOrdersItem } from "./BrunchOrdersItem";
 import { BrunchOrdersConsumable } from "./BrunchOrdersConsumables";
@@ -6,7 +12,7 @@ import { BrunchOrdersConsumable } from "./BrunchOrdersConsumables";
 @Entity("brunch_reservations") // Nom de la table
 export class BrunchReservation {
   @PrimaryGeneratedColumn("uuid")
-  Id_Brunch_reservation: string;
+  id: string;
 
   @Column({ type: "varchar", length: 50 })
   customer_name: string;
@@ -38,7 +44,7 @@ export class BrunchReservation {
   @Column({ type: "boolean", default: false })
   ended: boolean;
 
-  @OneToMany(() => Brunch, (brunch) => brunch.reservations)
+  @ManyToOne(() => Brunch, (brunch) => brunch.reservations)
   brunch: Brunch;
 
   @OneToMany(() => BrunchOrdersItem, (orderItem) => orderItem.reservation)

@@ -60,7 +60,7 @@ async function getBrunchById(req, res) {
   try {
     const brunchsRepository = AppDataSource.getRepository(Brunch);
     const brunch = await brunchsRepository.findOne({
-      where: { Id_Brunch: id },
+      where: { id: id },
       relations: ["items"],
     });
 
@@ -83,7 +83,7 @@ async function deleteBrunch(req, res) {
   try {
     const brunchsRepository = AppDataSource.getRepository(Brunch);
     const brunch = await brunchsRepository.findOne({
-      where: { Id_Brunch: id },
+      where: { id: id },
     });
 
     if (!brunch) {
@@ -108,7 +108,7 @@ async function updateBrunch(req, res) {
   try {
     const brunchsRepository = AppDataSource.getRepository(Brunch);
     const brunch = await brunchsRepository.findOne({
-      where: { Id_Brunch: id },
+      where: { id: id },
     });
 
     if (!brunch) {

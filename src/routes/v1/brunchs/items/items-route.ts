@@ -27,7 +27,7 @@ async function getBrunchItems(req, res) {
   try {
     const brunchsRepository = AppDataSource.getRepository(Brunch);
     const brunch = await brunchsRepository.findOne({
-      where: { Id_Brunch: id },
+      where: { id: id },
       relations: ["items"],
     });
 
@@ -60,7 +60,7 @@ async function createBrunchItems(req, res) {
   try {
     const brunchsRepository = AppDataSource.getRepository(Brunch);
     const brunch = await brunchsRepository.findOne({
-      where: { Id_Brunch: id },
+      where: { id: id },
     });
 
     if (!brunch) {
@@ -99,7 +99,7 @@ async function createBrunchItemsCollection(req, res) {
   try {
     const brunchsRepository = AppDataSource.getRepository(Brunch);
     const brunch = await brunchsRepository.findOne({
-      where: { Id_Brunch: id },
+      where: { id: id },
     });
 
     if (!brunch) {
@@ -132,7 +132,7 @@ async function getBrunchItemById(req, res) {
   try {
     const brunchsRepository = AppDataSource.getRepository(Brunch);
     const brunch = await brunchsRepository.findOne({
-      where: { Id_Brunch: id },
+      where: { id: id },
       relations: ["items"],
     });
 
@@ -140,7 +140,7 @@ async function getBrunchItemById(req, res) {
       return res.status(404).json({ message: "Brunch not found" });
     }
 
-    const item = brunch.items.find((item) => item.Id_Brunch_item === itemId);
+    const item = brunch.items.find((item) => item.id === itemId);
 
     if (!item) {
       return res.status(404).json({ message: "Brunch item not found" });
@@ -161,7 +161,7 @@ async function deleteBrunchItem(req, res) {
   try {
     const brunchsRepository = AppDataSource.getRepository(Brunch);
     const brunch = await brunchsRepository.findOne({
-      where: { Id_Brunch: id },
+      where: { id: id },
       relations: ["items"],
     });
 
@@ -169,7 +169,7 @@ async function deleteBrunchItem(req, res) {
       return res.status(404).json({ message: "Brunch not found" });
     }
 
-    const item = brunch.items.find((item) => item.Id_Brunch_item === itemId);
+    const item = brunch.items.find((item) => item.id === itemId);
 
     if (!item) {
       return res.status(404).json({ message: "Brunch item not found" });
@@ -194,7 +194,7 @@ async function deleteBrunchItems(req, res) {
   try {
     const brunchsRepository = AppDataSource.getRepository(Brunch);
     const brunch = await brunchsRepository.findOne({
-      where: { Id_Brunch: id },
+      where: { id: id },
       relations: ["items"],
     });
 
@@ -231,7 +231,7 @@ async function updateBrunchItem(req, res) {
   try {
     const brunchsRepository = AppDataSource.getRepository(Brunch);
     const brunch = await brunchsRepository.findOne({
-      where: { Id_Brunch: id },
+      where: { id: id },
       relations: ["items"],
     });
 
@@ -239,7 +239,7 @@ async function updateBrunchItem(req, res) {
       return res.status(404).json({ message: "Brunch not found" });
     }
 
-    const item = brunch.items.find((item) => item.Id_Brunch_item === itemId);
+    const item = brunch.items.find((item) => item.id === itemId);
 
     if (!item) {
       return res.status(404).json({ message: "Brunch item not found" });
@@ -247,7 +247,7 @@ async function updateBrunchItem(req, res) {
 
     const brunchItemsRepository = AppDataSource.getRepository(BrunchItem);
 
-    await brunchItemsRepository.update(item.Id_Brunch_item, {
+    await brunchItemsRepository.update(item.id, {
       name,
       course,
       description,

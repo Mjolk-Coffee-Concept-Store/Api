@@ -1,18 +1,10 @@
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  ManyToOne,
-  OneToMany,
-  JoinColumn,
-} from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
 import { Brunch } from "./Brunch";
-import { BrunchOrdersItem } from "./BrunchOrdersItem";
 
 @Entity("brunch_items")
 export class BrunchItem {
   @PrimaryGeneratedColumn("uuid")
-  Id_Brunch_item: string;
+  id: string;
 
   @Column({ type: "varchar", length: 255 })
   name: string;

@@ -13,11 +13,14 @@ export class ConsumablesOrdered {
   @Column({ type: "boolean", default: false })
   served: boolean;
 
-  @ManyToOne(() => Consumable, (consumable) => consumable.Id_Consumable)
+  @Column({ type: "text", nullable: true })
+  comments: string;
+
+  @ManyToOne(() => Consumable, (consumable) => consumable.id)
   @JoinColumn({ name: "Id_Consumable" })
   consumable: Consumable;
 
-  @ManyToOne(() => ConsumablesOrder, (order) => order.Id_Consumables_Order)
+  @ManyToOne(() => ConsumablesOrder, (order) => order.id)
   @JoinColumn({ name: "Id_Consumables_Order" })
   consumablesOrder: ConsumablesOrder;
 }
