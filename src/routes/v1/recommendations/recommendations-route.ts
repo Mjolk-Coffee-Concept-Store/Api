@@ -2,13 +2,14 @@ import { Router } from "express";
 import { AppDataSource } from "../../../data-source";
 import { Recommendation } from "../../../entities/Recommendation";
 import { PermissionsService } from "../../../services/permissionsService";
+import { authMiddleware } from "../../../middlewares/authMiddleware";
 
 export const recommendationsRouter = Router();
 
-recommendationsRouter.get("/", getRecommendations);
+recommendationsRouter.get("/", authMiddleware, getRecommendations);
 recommendationsRouter.post("/", createRecommendation);
-recommendationsRouter.get("/:id", getRecommendationById);
-recommendationsRouter.delete("/:id", deleteRecommendation);
+recommendationsRouter.get("/:id", authMiddleware, getRecommendationById);
+recommendationsRouter.delete("/:id", authMiddleware, deleteRecommendation);
 
 async function getRecommendations(req, res) {
   // #swagger.tags = ['Recommendations']
