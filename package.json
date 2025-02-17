@@ -10,7 +10,11 @@
     "watch": "tsc -w",
     "swagger": "ts-node src/swagger.ts",
     "migrate:create": "npx typeorm-ts-node-commonjs migration:generate src/migrations/Update-Table -d src/data-source.ts",
-    "migrate:run": "npx typeorm-ts-node-commonjs migration:run -d src/data-source.ts"
+    "migrate:run": "npx typeorm-ts-node-commonjs migration:run -d src/data-source.ts",
+    "docker:build": "docker build -t mjolk-api .",
+    "docker:run": "docker run -p 3000:3000 --env-file .env --network mjolk-network --name mjolk-api mjolk-api",
+    "docker:stop": "docker stop mjolk-api",
+    "docker:restart": "docker restart mjolk-api"
   },
   "keywords": [],
   "author": "",
