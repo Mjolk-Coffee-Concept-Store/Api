@@ -27,41 +27,33 @@ async function createConsumable(req, res) {
     allergens,
   } = req.body;
 
-  try {
-    const consumablesRepository = AppDataSource.getRepository(Consumable);
+  const consumablesRepository = AppDataSource.getRepository(Consumable);
 
-    const consumable = consumablesRepository.create({
-      name,
-      type,
-      description,
-      temperature,
-      price,
-      is_vegetarian,
-      is_vegan,
-      availability,
-      allergens,
-    });
+  const consumable = consumablesRepository.create({
+    name,
+    type,
+    description,
+    temperature,
+    price,
+    is_vegetarian,
+    is_vegan,
+    availability,
+    allergens,
+  });
 
-    await consumablesRepository.save(consumable);
+  await consumablesRepository.save(consumable);
 
-    return res.status(201).json(consumable);
-  } catch (error) {
-    return res.status(500).json({ message: "Internal server error", error });
-  }
+  return res.status(201).json(consumable);
 }
 
 async function getConsumables(req, res) {
   // #swagger.tags = ['Consumables']
   // #swagger.summary = 'Get consumables'
 
-  try {
-    const consumablesRepository = AppDataSource.getRepository(Consumable);
-    const consumables = await consumablesRepository.find();
+  const consumablesRepository = AppDataSource.getRepository(Consumable);
+  const consumables = await consumablesRepository.find();
 
-    return res.json(consumables);
-  } catch (error) {
-    return res.status(500).json({ message: "Internal server error", error });
-  }
+  return res.json(consumables);
 }
 
 async function getConsumableById(req, res) {
@@ -69,20 +61,16 @@ async function getConsumableById(req, res) {
   // #swagger.summary = 'Get a consumable by Id'
   const { id } = req.params;
 
-  try {
-    const consumablesRepository = AppDataSource.getRepository(Consumable);
-    const consumable = await consumablesRepository.findOne({
-      where: { id: id },
-    });
+  const consumablesRepository = AppDataSource.getRepository(Consumable);
+  const consumable = await consumablesRepository.findOne({
+    where: { id: id },
+  });
 
-    if (!consumable) {
-      return res.status(404).json({ message: "Consumable not found" });
-    }
-
-    return res.json(consumable);
-  } catch (error) {
-    return res.status(500).json({ message: "Internal server error", error });
+  if (!consumable) {
+    return res.status(404).json({ message: "Consumable not found" });
   }
+
+  return res.json(consumable);
 }
 
 async function deleteConsumable(req, res) {
@@ -90,22 +78,18 @@ async function deleteConsumable(req, res) {
   // #swagger.summary = 'Delete a consumable by Id'
   const { id } = req.params;
 
-  try {
-    const consumablesRepository = AppDataSource.getRepository(Consumable);
-    const consumable = await consumablesRepository.findOne({
-      where: { id: id },
-    });
+  const consumablesRepository = AppDataSource.getRepository(Consumable);
+  const consumable = await consumablesRepository.findOne({
+    where: { id: id },
+  });
 
-    if (!consumable) {
-      return res.status(404).json({ message: "Consumable not found" });
-    }
-
-    await consumablesRepository.delete(consumable);
-
-    return res.json({ message: "Consumable deleted" });
-  } catch (error) {
-    return res.status(500).json({ message: "Internal server error", error });
+  if (!consumable) {
+    return res.status(404).json({ message: "Consumable not found" });
   }
+
+  await consumablesRepository.delete(consumable);
+
+  return res.json({ message: "Consumable deleted" });
 }
 
 async function updateConsumable(req, res) {
@@ -125,30 +109,26 @@ async function updateConsumable(req, res) {
     allergens,
   } = req.body;
 
-  try {
-    const consumablesRepository = AppDataSource.getRepository(Consumable);
-    const consumable = await consumablesRepository.findOne({
-      where: { id: id },
-    });
+  const consumablesRepository = AppDataSource.getRepository(Consumable);
+  const consumable = await consumablesRepository.findOne({
+    where: { id: id },
+  });
 
-    if (!consumable) {
-      return res.status(404).json({ message: "Consumable not found" });
-    }
-
-    consumable.name = name;
-    consumable.type = type;
-    consumable.description = description;
-    consumable.temperature = temperature;
-    consumable.price = price;
-    consumable.is_vegetarian = is_vegetarian;
-    consumable.is_vegan = is_vegan;
-    consumable.availability = availability;
-    consumable.allergens = allergens;
-
-    await consumablesRepository.save(consumable);
-
-    return res.json(consumable);
-  } catch (error) {
-    return res.status(500).json({ message: "Internal server error", error });
+  if (!consumable) {
+    return res.status(404).json({ message: "Consumable not found" });
   }
+
+  consumable.name = name;
+  consumable.type = type;
+  consumable.description = description;
+  consumable.temperature = temperature;
+  consumable.price = price;
+  consumable.is_vegetarian = is_vegetarian;
+  consumable.is_vegan = is_vegan;
+  consumable.availability = availability;
+  consumable.allergens = allergens;
+
+  await consumablesRepository.save(consumable);
+
+  return res.json(consumable);
 }

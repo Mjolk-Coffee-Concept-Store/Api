@@ -1,0 +1,9 @@
+{
+  "watch": ["src/**/*.ts"],
+  "ext": "ts",
+  "ignore": ["src/swagger.ts"],
+  "exec": "ts-node src/index.ts",
+  "events": {
+    "restart": "ts-node src/swagger.ts"
+  }
+}

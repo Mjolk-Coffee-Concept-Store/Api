@@ -1,13 +1,22 @@
-import { Entity, PrimaryColumn, ManyToOne, JoinColumn, Column } from "typeorm";
+import {
+  Entity,
+  ManyToOne,
+  JoinColumn,
+  Column,
+  PrimaryGeneratedColumn,
+} from "typeorm";
 import { Consumable } from "./Consumable";
 import { ConsumablesOrder } from "./ConsumablesOrder";
 
 @Entity("consumables_ordered")
 export class ConsumablesOrdered {
-  @PrimaryColumn("uuid")
+  @PrimaryGeneratedColumn("uuid")
+  id: string;
+
+  @Column({ type: "uuid" })
   Id_Consumable: string;
 
-  @PrimaryColumn("uuid")
+  @Column({ type: "uuid" })
   Id_Consumables_Order: string;
 
   @Column({ type: "boolean", default: false })

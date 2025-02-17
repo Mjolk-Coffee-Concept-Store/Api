@@ -30,37 +30,32 @@ async function createBrunchReservation(req, res) {
 
   const { id } = req.params;
 
-  try {
-    const brunchsRepository = AppDataSource.getRepository(Brunch);
-    const brunch = await brunchsRepository.findOne({
-      where: { id: id },
-    });
+  const brunchsRepository = AppDataSource.getRepository(Brunch);
+  const brunch = await brunchsRepository.findOne({
+    where: { id: id },
+  });
 
-    if (!brunch) {
-      return res.status(404).json({ message: "Brunch not found" });
-    }
-
-    const reservationsRepository =
-      AppDataSource.getRepository(BrunchReservation);
-
-    const reservation = reservationsRepository.create({
-      customer_name,
-      customer_email,
-      customer_phone,
-      company_name,
-      reservation_date,
-      number_of_people,
-      created_at: new Date(),
-      table_number,
-      brunch,
-    });
-
-    await reservationsRepository.save(reservation);
-
-    return res.status(201).json(reservation);
-  } catch (error) {
-    return res.status(500).json({ message: "Internal server error", error });
+  if (!brunch) {
+    return res.status(404).json({ message: "Brunch not found" });
   }
+
+  const reservationsRepository = AppDataSource.getRepository(BrunchReservation);
+
+  const reservation = reservationsRepository.create({
+    customer_name,
+    customer_email,
+    customer_phone,
+    company_name,
+    reservation_date,
+    number_of_people,
+    created_at: new Date(),
+    table_number,
+    brunch,
+  });
+
+  await reservationsRepository.save(reservation);
+
+  return res.status(201).json(reservation);
 }
 
 async function getBrunchReservations(req, res) {
@@ -69,21 +64,17 @@ async function getBrunchReservations(req, res) {
 
   const { id } = req.params;
 
-  try {
-    const brunchsRepository = AppDataSource.getRepository(Brunch);
-    const brunch = await brunchsRepository.findOne({
-      where: { id: id },
-      relations: ["reservations"],
-    });
+  const brunchsRepository = AppDataSource.getRepository(Brunch);
+  const brunch = await brunchsRepository.findOne({
+    where: { id: id },
+    relations: ["reservations"],
+  });
 
-    if (!brunch) {
-      return res.status(404).json({ message: "Brunch not found" });
-    }
-
-    return res.json(brunch.reservations);
-  } catch (error) {
-    return res.status(500).json({ message: "Internal server error", error });
+  if (!brunch) {
+    return res.status(404).json({ message: "Brunch not found" });
   }
+
+  return res.json(brunch.reservations);
 }
 
 async function getBrunchReservationById(req, res) {
@@ -92,29 +83,25 @@ async function getBrunchReservationById(req, res) {
 
   const { id, reservationId } = req.params;
 
-  try {
-    const brunchsRepository = AppDataSource.getRepository(Brunch);
-    const brunch = await brunchsRepository.findOne({
-      where: { id: id },
-      relations: ["reservations"],
-    });
+  const brunchsRepository = AppDataSource.getRepository(Brunch);
+  const brunch = await brunchsRepository.findOne({
+    where: { id: id },
+    relations: ["reservations"],
+  });
 
-    if (!brunch) {
-      return res.status(404).json({ message: "Brunch not found" });
-    }
-
-    const reservation = brunch.reservations.find(
-      (reservation) => reservation.id === reservationId
-    );
-
-    if (!reservation) {
-      return res.status(404).json({ message: "Brunch reservation not found" });
-    }
-
-    return res.json(reservation);
-  } catch (error) {
-    return res.status(500).json({ message: "Internal server error", error });
+  if (!brunch) {
+    return res.status(404).json({ message: "Brunch not found" });
   }
+
+  const reservation = brunch.reservations.find(
+    (reservation) => reservation.id === reservationId
+  );
+
+  if (!reservation) {
+    return res.status(404).json({ message: "Brunch reservation not found" });
+  }
+
+  return res.json(reservation);
 }
 
 async function updateBrunchReservation(req, res) {
@@ -133,42 +120,37 @@ async function updateBrunchReservation(req, res) {
     table_number,
   } = req.body;
 
-  try {
-    const brunchsRepository = AppDataSource.getRepository(Brunch);
-    const brunch = await brunchsRepository.findOne({
-      where: { id: id },
-      relations: ["reservations"],
-    });
+  const brunchsRepository = AppDataSource.getRepository(Brunch);
+  const brunch = await brunchsRepository.findOne({
+    where: { id: id },
+    relations: ["reservations"],
+  });
 
-    if (!brunch) {
-      return res.status(404).json({ message: "Brunch not found" });
-    }
-
-    const reservation = brunch.reservations.find(
-      (reservation) => reservation.id === reservationId
-    );
-
-    if (!reservation) {
-      return res.status(404).json({ message: "Brunch reservation not found" });
-    }
-
-    const reservationsRepository =
-      AppDataSource.getRepository(BrunchReservation);
-
-    await reservationsRepository.update(reservationId, {
-      customer_name,
-      customer_email,
-      customer_phone,
-      company_name,
-      reservation_date,
-      number_of_people,
-      table_number,
-    });
-
-    return res.json({ message: "Brunch reservation updated" });
-  } catch (error) {
-    return res.status(500).json({ message: "Internal server error", error });
+  if (!brunch) {
+    return res.status(404).json({ message: "Brunch not found" });
   }
+
+  const reservation = brunch.reservations.find(
+    (reservation) => reservation.id === reservationId
+  );
+
+  if (!reservation) {
+    return res.status(404).json({ message: "Brunch reservation not found" });
+  }
+
+  const reservationsRepository = AppDataSource.getRepository(BrunchReservation);
+
+  await reservationsRepository.update(reservationId, {
+    customer_name,
+    customer_email,
+    customer_phone,
+    company_name,
+    reservation_date,
+    number_of_people,
+    table_number,
+  });
+
+  return res.json({ message: "Brunch reservation updated" });
 }
 
 async function deleteBrunchReservation(req, res) {
@@ -177,32 +159,27 @@ async function deleteBrunchReservation(req, res) {
 
   const { id, reservationId } = req.params;
 
-  try {
-    const brunchsRepository = AppDataSource.getRepository(Brunch);
-    const brunch = await brunchsRepository.findOne({
-      where: { id: id },
-      relations: ["reservations"],
-    });
+  const brunchsRepository = AppDataSource.getRepository(Brunch);
+  const brunch = await brunchsRepository.findOne({
+    where: { id: id },
+    relations: ["reservations"],
+  });
 
-    if (!brunch) {
-      return res.status(404).json({ message: "Brunch not found" });
-    }
-
-    const reservation = brunch.reservations.find(
-      (reservation) => reservation.id === reservationId
-    );
-
-    if (!reservation) {
-      return res.status(404).json({ message: "Brunch reservation not found" });
-    }
-
-    const reservationsRepository =
-      AppDataSource.getRepository(BrunchReservation);
-
-    await reservationsRepository.delete(reservationId);
-
-    return res.json({ message: "Brunch reservation deleted" });
-  } catch (error) {
-    return res.status(500).json({ message: "Internal server error", error });
+  if (!brunch) {
+    return res.status(404).json({ message: "Brunch not found" });
   }
+
+  const reservation = brunch.reservations.find(
+    (reservation) => reservation.id === reservationId
+  );
+
+  if (!reservation) {
+    return res.status(404).json({ message: "Brunch reservation not found" });
+  }
+
+  const reservationsRepository = AppDataSource.getRepository(BrunchReservation);
+
+  await reservationsRepository.delete(reservationId);
+
+  return res.json({ message: "Brunch reservation deleted" });
 }

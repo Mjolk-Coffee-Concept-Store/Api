@@ -36,6 +36,10 @@ const doc = {
       description: "Operations about Backoffice users",
     },
     {
+      name: "Orders",
+      description: "Operations about Orders",
+    },
+    {
       name: "Consumables",
       description: "Operations about Consumables",
     },
@@ -55,6 +59,10 @@ const doc = {
       name: "Brunchs Reservations",
       description: "Operations about Brunchs Reservations",
     },
+    {
+      name: "Brunchs Reservations Orders",
+      description: "Operations about Brunchs Reservations Orders",
+    },
   ],
   components: {
     securitySchemes: {
@@ -66,7 +74,21 @@ const doc = {
           "Enter your bearer token in the format **Bearer &lt;token&gt;**",
       },
     },
+    schemas: {
+      Consumable: {
+        name: "string",
+        type: "integer",
+        description: "string",
+        temperature: "string",
+        price: "number",
+        is_vegetarian: "boolean",
+        is_vegan: "boolean",
+        availability: "boolean",
+        allergens: "string | null",
+      },
+    },
   },
+
   security: [
     {
       bearerAuth: [],

@@ -1,4 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
+
+import { ConsumablesOrdered } from "./ConsumablesOrdered";
 
 @Entity("consumables_orders")
 export class ConsumablesOrder {
@@ -10,4 +12,13 @@ export class ConsumablesOrder {
 
   @Column({ type: "timestamp" })
   submission_date: Date;
+
+  @Column({ type: "boolean" })
+  completed: boolean;
+
+  @OneToMany(
+    () => ConsumablesOrdered,
+    (consumable) => consumable.consumablesOrder
+  )
+  consumablesOrdered: ConsumablesOrdered[];
 }

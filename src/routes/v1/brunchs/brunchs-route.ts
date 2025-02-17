@@ -19,14 +19,10 @@ async function getBrunchs(req, res) {
   // #swagger.tags = ['Brunchs']
   // #swagger.summary = 'Get brunchs'
 
-  try {
-    const brunchsRepository = AppDataSource.getRepository(Brunch);
-    const brunchs = await brunchsRepository.find();
+  const brunchsRepository = AppDataSource.getRepository(Brunch);
+  const brunchs = await brunchsRepository.find();
 
-    return res.json(brunchs);
-  } catch (error) {
-    return res.status(500).json({ message: "Internal server error", error });
-  }
+  return res.json(brunchs);
 }
 
 async function createBrunch(req, res) {
@@ -35,20 +31,16 @@ async function createBrunch(req, res) {
 
   const { name, description } = req.body;
 
-  try {
-    const brunchsRepository = AppDataSource.getRepository(Brunch);
+  const brunchsRepository = AppDataSource.getRepository(Brunch);
 
-    const brunch = brunchsRepository.create({
-      name,
-      description,
-    });
+  const brunch = brunchsRepository.create({
+    name,
+    description,
+  });
 
-    await brunchsRepository.save(brunch);
+  await brunchsRepository.save(brunch);
 
-    return res.json(brunch);
-  } catch (error) {
-    return res.status(500).json({ message: "Internal server error", error });
-  }
+  return res.json(brunch);
 }
 
 async function getBrunchById(req, res) {
@@ -57,21 +49,17 @@ async function getBrunchById(req, res) {
 
   const { id } = req.params;
 
-  try {
-    const brunchsRepository = AppDataSource.getRepository(Brunch);
-    const brunch = await brunchsRepository.findOne({
-      where: { id: id },
-      relations: ["items"],
-    });
+  const brunchsRepository = AppDataSource.getRepository(Brunch);
+  const brunch = await brunchsRepository.findOne({
+    where: { id: id },
+    relations: ["items"],
+  });
 
-    if (!brunch) {
-      return res.status(404).json({ message: "Brunch not found" });
-    }
-
-    return res.json(brunch);
-  } catch (error) {
-    return res.status(500).json({ message: "Internal server error", error });
+  if (!brunch) {
+    return res.status(404).json({ message: "Brunch not found" });
   }
+
+  return res.json(brunch);
 }
 
 async function deleteBrunch(req, res) {
@@ -80,22 +68,18 @@ async function deleteBrunch(req, res) {
 
   const { id } = req.params;
 
-  try {
-    const brunchsRepository = AppDataSource.getRepository(Brunch);
-    const brunch = await brunchsRepository.findOne({
-      where: { id: id },
-    });
+  const brunchsRepository = AppDataSource.getRepository(Brunch);
+  const brunch = await brunchsRepository.findOne({
+    where: { id: id },
+  });
 
-    if (!brunch) {
-      return res.status(404).json({ message: "Brunch not found" });
-    }
-
-    await brunchsRepository.delete(id);
-
-    return res.json({ message: "Brunch deleted" });
-  } catch (error) {
-    return res.status(500).json({ message: "Internal server error", error });
+  if (!brunch) {
+    return res.status(404).json({ message: "Brunch not found" });
   }
+
+  await brunchsRepository.delete(id);
+
+  return res.json({ message: "Brunch deleted" });
 }
 
 async function updateBrunch(req, res) {
@@ -105,23 +89,19 @@ async function updateBrunch(req, res) {
   const { id } = req.params;
   const { name, description } = req.body;
 
-  try {
-    const brunchsRepository = AppDataSource.getRepository(Brunch);
-    const brunch = await brunchsRepository.findOne({
-      where: { id: id },
-    });
+  const brunchsRepository = AppDataSource.getRepository(Brunch);
+  const brunch = await brunchsRepository.findOne({
+    where: { id: id },
+  });
 
-    if (!brunch) {
-      return res.status(404).json({ message: "Brunch not found" });
-    }
-
-    brunch.name = name;
-    brunch.description = description;
-
-    await brunchsRepository.save(brunch);
-
-    return res.json(brunch);
-  } catch (error) {
-    return res.status(500).json({ message: "Internal server error", error });
+  if (!brunch) {
+    return res.status(404).json({ message: "Brunch not found" });
   }
+
+  brunch.name = name;
+  brunch.description = description;
+
+  await brunchsRepository.save(brunch);
+
+  return res.json(brunch);
 }

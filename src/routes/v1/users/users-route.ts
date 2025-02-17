@@ -21,28 +21,24 @@ async function login(req: Request, res: Response) {
 
   const { username, password } = req.body;
 
-  try {
-    const userRepository = AppDataSource.getRepository(User);
-    const user = await userRepository.findOne({ where: { username } });
+  const userRepository = AppDataSource.getRepository(User);
+  const user = await userRepository.findOne({ where: { username } });
 
-    if (!user || !(await bcrypt.compare(password, user.password))) {
-      return res.status(401).json({ message: "Invalid credentials" });
-    }
-
-    if (!user.is_active) {
-      return res.status(403).json({ message: "User is not active" });
-    }
-
-    const token = jwt.sign(
-      { Id_User: user.id, permissions: user.permissions },
-      ENV.APP_JWT_SECRET as string,
-      { expiresIn: ENV.APP_JWT_EXPIRES_IN }
-    );
-
-    return res.json({ token });
-  } catch (error) {
-    return res.status(500).json({ message: "Internal server error", error });
+  if (!user || !(await bcrypt.compare(password, user.password))) {
+    return res.status(401).json({ message: "Invalid credentials" });
   }
+
+  if (!user.is_active) {
+    return res.status(403).json({ message: "User is not active" });
+  }
+
+  const token = jwt.sign(
+    { Id_User: user.id, permissions: user.permissions },
+    ENV.APP_JWT_SECRET as string,
+    { expiresIn: ENV.APP_JWT_EXPIRES_IN }
+  );
+
+  return res.json({ token });
 }
 
 async function register(req: Request, res: Response) {
@@ -51,29 +47,25 @@ async function register(req: Request, res: Response) {
 
   const { username, password, full_name, role } = req.body;
 
-  try {
-    const userRepository = AppDataSource.getRepository(User);
+  const userRepository = AppDataSource.getRepository(User);
 
-    const userExists = await userRepository.findOne({ where: { username } });
+  const userExists = await userRepository.findOne({ where: { username } });
 
-    if (userExists) {
-      return res.status(400).json({ message: "User already exists" });
-    }
-
-    const user = new User();
-    user.username = username;
-    user.password = await bcrypt.hash(password, 10);
-    user.permissions =
-      role === "admin" ? PermissionsService.ADMIN : PermissionsService.EMPLOYEE;
-    user.full_name = full_name;
-    user.is_active = true;
-
-    await userRepository.save(user);
-
-    return res.json({ message: "User created" });
-  } catch (error) {
-    return res.status(500).json({ message: "Internal server error", error });
+  if (userExists) {
+    return res.status(400).json({ message: "User already exists" });
   }
+
+  const user = new User();
+  user.username = username;
+  user.password = await bcrypt.hash(password, 10);
+  user.permissions =
+    role === "admin" ? PermissionsService.ADMIN : PermissionsService.EMPLOYEE;
+  user.full_name = full_name;
+  user.is_active = true;
+
+  await userRepository.save(user);
+
+  return res.json({ message: "User created" });
 }
 
 async function whoAmI(req: Request, res: Response) {
