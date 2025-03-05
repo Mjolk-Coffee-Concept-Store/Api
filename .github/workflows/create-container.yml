@@ -1,4 +1,4 @@
-name: Build and Push Docker Container
+name: Build and Deploy Container
 
 on:
   push:
@@ -7,20 +7,20 @@ on:
 
 jobs:
   build-and-deploy:
-      runs-on: ubuntu-latest
-      permissions:
-        contents: read
-        packages: write
-        id-token: write
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
 
     steps:
-      - name: Checkout repository
+      - name: Checkout code
         uses: actions/checkout@v2
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
 
-      - name: Login to GitHub Container Registry
+      - name: Log in to GitHub Container Registry
         uses: docker/login-action@v1
         with:
           registry: ghcr.io
@@ -28,8 +28,6 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build and push Docker image
-        uses: docker/build-push-action@v2
-        with:
-          context: .
-          push: true
-          tags: ghcr.io/mjolk-coffee-concept-store/api:latest
+        run: |
+          docker buildx build --push \
+            --tag ghcr.io/mjolk-coffee-concept-store/api:latest .
