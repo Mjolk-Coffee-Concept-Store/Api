@@ -23,11 +23,11 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerOutput));
+
 app.use("/", routes);
 
 app.use(errorHandler);
-
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerOutput));
 
 app.listen(PORT, () => {
   console.info(`💽 Mjölk API starting...`);

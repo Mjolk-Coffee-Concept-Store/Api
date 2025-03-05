@@ -13,6 +13,9 @@ RUN npm ci --only=production
 # Copy the rest of the application code
 COPY . .
 
+# Build the Swagger documentation
+RUN npm run swagger
+
 # Build the application
 RUN npm run build
 
