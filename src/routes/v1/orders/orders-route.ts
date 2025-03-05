@@ -4,6 +4,7 @@ import { Consumable } from "../../../entities/Consumable";
 import { ConsumablesOrder } from "../../../entities/ConsumablesOrder";
 import { ConsumablesOrdered } from "../../../entities/ConsumablesOrdered";
 import { In } from "typeorm";
+import { authMiddleware } from "../../../middlewares/authMiddleware";
 
 export const ordersRouter = Router();
 
@@ -11,7 +12,7 @@ ordersRouter.post("/", createOrder);
 ordersRouter.post("/serve/:unitOrderId", toggleOrderCompleted);
 ordersRouter.post("/:id/serveAll", serveOrderAll);
 ordersRouter.post("/:id/complete", completeOrder);
-ordersRouter.get("/", getOrders);
+ordersRouter.get("/", authMiddleware, getOrders);
 ordersRouter.get("/getNotCompleted", getNotCompletedOrders);
 ordersRouter.get("/:id", getOrder);
 ordersRouter.delete("/:id", deleteOrder);

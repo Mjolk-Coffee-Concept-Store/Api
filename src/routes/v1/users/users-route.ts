@@ -12,6 +12,7 @@ import { SessionsService } from "../../../services/sessionsService";
 export const usersRouter = Router();
 
 usersRouter.post("/login", login);
+usersRouter.post("/logout", logout);
 usersRouter.post("/register", register);
 usersRouter.get("/whoami", authMiddleware, whoAmI);
 
@@ -38,7 +39,17 @@ async function login(req: Request, res: Response) {
     { expiresIn: ENV.APP_JWT_EXPIRES_IN }
   );
 
-  return res.json({ token });
+  const response = res.cookie("token", token, {
+    httpOnly: true,
+    secure: ENV.APP_ENV === "production",
+    maxAge: 1000 * 60 * 60,
+  });
+
+  if (req.headers.referer?.includes("/api-docs/")) {
+    return response.json({ token });
+  }
+
+  return response.json({ message: "Login successful" });
 }
 
 async function register(req: Request, res: Response) {
@@ -72,7 +83,7 @@ async function whoAmI(req: Request, res: Response) {
   // #swagger.tags = ['Users']
   // #swagger.summary = 'Get user information from token'
 
-  const token = req.headers.authorization?.split(" ")[1];
+  const token = req.cookies.token || req.headers.authorization?.split(" ")[1];
 
   if (!token) {
     return res.status(401).json({ message: "Token not provided" });
@@ -92,4 +103,13 @@ async function whoAmI(req: Request, res: Response) {
   } catch (err) {
     return res.status(403).json({ message: "Invalid token" });
   }
+}
+
+async function logout(req: Request, res: Response) {
+  // #swagger.tags = ['Users']
+  // #swagger.summary = 'Logout'
+
+  res.clearCookie("token");
+
+  return res.json({ message: "Logout successful" });
 }

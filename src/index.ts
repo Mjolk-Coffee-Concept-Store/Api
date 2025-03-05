@@ -1,6 +1,7 @@
 import "reflect-metadata";
 
 import express from "express";
+import cookieParser from "cookie-parser";
 import cors from "cors";
 import bodyParser from "body-parser";
 import swaggerUi from "swagger-ui-express";
@@ -18,7 +19,13 @@ import { ENV } from "./config/env";
 const app = express();
 const PORT = ENV.APP_PORT;
 
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:4200",
+    credentials: true,
+  })
+);
+app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
