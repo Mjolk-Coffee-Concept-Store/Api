@@ -28,4 +28,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: ghcr.io/mjolk/api:latest
+          tags: ghcr.io/${{ github.repository | toLowerCase }}:latest
